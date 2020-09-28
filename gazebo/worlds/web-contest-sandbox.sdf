@@ -40,6 +40,14 @@
       <pose>-0.530772 0 0 0 0 -1.57</pose>
     </include>
 
+    <model name="icub_head_epr">
+      <include>
+        <uri>model://icub_head_epr</uri>
+        <pose>0.0 0.0 0.63 0.0 0.0 0.0</pose>
+      </include>
+    </model>
+
+
     <gui fullscreen='0'>
       <camera name='user_camera'>
         <pose frame=''>-1.73754 2.13332 1.77051 0 0.463643 -1.0638</pose>

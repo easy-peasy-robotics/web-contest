@@ -69,6 +69,14 @@ RUN git clone https://github.com/robotology/ycm.git --depth 1 && \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
     make install && \
     cd ../.. && rm -Rf ycm
+    
+# Build robot-testing-framework
+RUN git clone https://github.com/robotology/robot-testing-framework.git --depth 1 --branch $BRANCH && \
+    cd robot-testing-framework && mkdir build && cd build && \
+    cmake .. \
+    -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
+    make install && \
+    cd ../.. && rm -Rf robot-testing-framework
 
 # Build yarp
 RUN git clone https://github.com/robotology/yarp.git --depth 1 && \
@@ -108,7 +116,7 @@ RUN git clone https://github.com/robotology/icub-models.git --depth 1 --branch $
 ENV DISPLAY=:1
 ENV ICUBcontrib_DIR=/workspace/iCubContrib
 ENV YARP_DATA_DIRS=/usr/local/share/yarp:/usr/local/share/iCub:${ICUBcontrib_DIR}/share/ICUBcontrib
-ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib/yarp:${ICUBcontrib_DIR}/lib
+ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib/yarp:/usr/local/lib/robottestingframework:${ICUBcontrib_DIR}/lib
 
 # Create user gitpod
 RUN useradd -l -u 33333 -G sudo -md /home/gitpod -s /bin/bash -p gitpod gitpod && \

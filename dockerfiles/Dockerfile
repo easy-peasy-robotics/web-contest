@@ -46,7 +46,7 @@ RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb
     libgsl0-dev libopencv-dev libode-dev liblua5.1-dev lua5.1 git swig qtbase5-dev qtdeclarative5-dev \
     qtmultimedia5-dev qml-module-qtquick2 qml-module-qtquick-window2 qml-module-qtmultimedia \
     qml-module-qtquick-dialogs qml-module-qtquick-controls qml-module-qt-labs-folderlistmodel \
-    qml-module-qt-labs-settings libsdl1.2-dev libxml2-dev libv4l-dev libcgal-dev \
+    qml-module-qt-labs-settings libsdl1.2-dev libxml2-dev libv4l-dev libpcl-dev \
     gazebo11 libgazebo11-dev
     
 # Select options

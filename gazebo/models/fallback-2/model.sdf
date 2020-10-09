@@ -1,0 +1,23 @@
+<?xml version='1.0'?>
+<sdf version="1.7">
+  <model name="fallback-2">
+    <link name="base_link">
+      <collision name="collision">
+        <geometry>
+            <mesh>
+                <uri> model://fallback-2/mesh.stl </uri>
+                <scale>0.002 0.002 0.002</scale>
+            </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+            <mesh>
+                <uri> model://fallback-2/mesh.stl </uri>
+                <scale>0.002 0.002 0.002</scale>
+            </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>

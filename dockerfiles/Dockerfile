@@ -66,7 +66,7 @@ RUN git clone https://github.com/Kitware/VTK.git --depth 1 --branch v9.0.1 && \
 RUN git clone https://github.com/PointCloudLibrary/pcl.git --depth 1 --branch pcl-1.11.1 && \
     cd pcl && mkdir build && cd build && \
     cmake .. \
-    -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+    -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
     make install && \
     cd ../.. && rm -Rf pcl
 

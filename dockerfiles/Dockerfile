@@ -46,12 +46,20 @@ RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb
     libgsl0-dev libopencv-dev libode-dev liblua5.1-dev lua5.1 git swig qtbase5-dev qtdeclarative5-dev \
     qtmultimedia5-dev qml-module-qtquick2 qml-module-qtquick-window2 qml-module-qtmultimedia \
     qml-module-qtquick-dialogs qml-module-qtquick-controls qml-module-qt-labs-folderlistmodel \
-    qml-module-qt-labs-settings libsdl1.2-dev libxml2-dev libv4l-dev libpcl-dev \
+    qml-module-qt-labs-settings libsdl1.2-dev libxml2-dev libv4l-dev \
     gazebo11 libgazebo11-dev
     
 # Select options
 ARG BRANCH=devel
 ARG BUILD_TYPE=Release
+
+# Install PCL
+RUN git clone https://github.com/PointCloudLibrary/pcl.git --depth 1 --branch pcl-1.11.1 && \
+    cd pcl && mkdir build && cd build && \
+    cmake .. \
+    -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+    make install && \
+    cd ../.. && rm -Rf pcl
 
 # Install VTK
 RUN git clone https://github.com/Kitware/VTK.git --depth 1 --branch v9.0.1 && \

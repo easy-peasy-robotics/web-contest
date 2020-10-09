@@ -40,13 +40,32 @@
       <pose>-0.530772 0 0 0 0 -1.57</pose>
     </include>
 
+    <include>
+      <uri>model://fallback-1</uri>
+      <pose>-0.4 0.5 0.51 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://fallback-2</uri>
+      <pose>-0.4 0.6 0.51 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://fallback-3</uri>
+      <pose>-0.5 0.5 0.51 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://fallback-4</uri>
+      <pose>-0.5 0.6 0.51 0 0 0</pose>
+    </include>
+
     <model name="icub_head_epr">
       <include>
         <uri>model://icub_head_epr</uri>
         <pose>0.0 0.0 0.63 0.0 0.0 0.0</pose>
       </include>
     </model>
-
 
     <gui fullscreen='0'>
       <camera name='user_camera'>

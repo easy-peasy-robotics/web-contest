@@ -42,24 +42,16 @@ RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb
     wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add - && \
     apt update && \
     apt install -y libeigen3-dev build-essential cmake cmake-curses-gui coinor-libipopt-dev freeglut3-dev \
-    libboost-system-dev libboost-filesystem-dev libboost-thread-dev libtinyxml-dev libace-dev libedit-dev \
+    libboost-all-dev libtinyxml-dev libace-dev libedit-dev \
     libgsl0-dev libopencv-dev libode-dev liblua5.1-dev lua5.1 git swig qtbase5-dev qtdeclarative5-dev \
     qtmultimedia5-dev qml-module-qtquick2 qml-module-qtquick-window2 qml-module-qtmultimedia \
     qml-module-qtquick-dialogs qml-module-qtquick-controls qml-module-qt-labs-folderlistmodel \
-    qml-module-qt-labs-settings libsdl1.2-dev libxml2-dev libv4l-dev \
+    qml-module-qt-labs-settings libsdl1.2-dev libxml2-dev libv4l-dev libflann-dev libqhull-dev \
     gazebo11 libgazebo11-dev
     
 # Select options
 ARG BRANCH=devel
 ARG BUILD_TYPE=Release
-
-# Install PCL
-RUN git clone https://github.com/PointCloudLibrary/pcl.git --depth 1 --branch pcl-1.11.1 && \
-    cd pcl && mkdir build && cd build && \
-    cmake .. \
-    -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-    make install && \
-    cd ../.. && rm -Rf pcl
 
 # Install VTK
 RUN git clone https://github.com/Kitware/VTK.git --depth 1 --branch v9.0.1 && \
@@ -69,6 +61,14 @@ RUN git clone https://github.com/Kitware/VTK.git --depth 1 --branch v9.0.1 && \
     -DBUILD_TESTING=OFF && \
     make install && \
     cd ../.. && rm -Rf VTK
+
+# Install PCL
+RUN git clone https://github.com/PointCloudLibrary/pcl.git --depth 1 --branch pcl-1.11.1 && \
+    cd pcl && mkdir build && cd build && \
+    cmake .. \
+    -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+    make install && \
+    cd ../.. && rm -Rf pcl
 
 # Build ycm
 RUN git clone https://github.com/robotology/ycm.git --depth 1 && \

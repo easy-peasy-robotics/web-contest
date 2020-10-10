@@ -9,7 +9,10 @@ cmake_minimum_required(VERSION 3.12)
 project(web-contest-sandbox VERSION 1.0.0)
 
 find_package(YCM REQUIRED)
+find_package(YARP 3.3.0 REQUIRED)
 find_package(ICUBcontrib REQUIRED)
+find_package(Gazebo REQUIRED)
+
 list(APPEND CMAKE_MODULE_PATH ${ICUBCONTRIB_MODULE_PATH})
 include(ICUBcontribOptions)
 include(ICUBcontribHelpers)
@@ -17,3 +20,19 @@ include(ICUBcontribHelpers)
 icubcontrib_set_default_prefix()
 add_subdirectory(gazebo)
 include(AddUninstallTarget)
+
+# world
+add_library(${PROJECT_NAME}-world SHARED ${CMAKE_SOURCE_DIR}/src/world.cpp)
+target_compile_definitions(${PROJECT_NAME}-world PRIVATE _USE_MATH_DEFINES)
+target_include_directories(${PROJECT_NAME}-world PRIVATE ${GAZEBO_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME}-world PRIVATE ${GAZEBO_LIBRARIES} ${YARP_LIBRARIES})
+install(TARGETS ${PROJECT_NAME}-world LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}" COMPONENT shlib)
+
+# assignment
+include_directories(${CMAKE_SOURCE_DIR}/src)
+add_executable(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/src/main.cpp)
+target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES})
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+
+#file(GLOB scripts ${CMAKE_SOURCE_DIR}/app/scripts/*.xml)
+#yarp_install(FILES ${scripts} DESTINATION ${ICUBCONTRIB_APPLICATIONS_INSTALL_DIR})

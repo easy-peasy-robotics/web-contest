@@ -1,0 +1,63 @@
+<application>
+
+  <name>Assignment on Web Contest Sandbox App icubSim</name>
+
+  <dependencies>
+      <port>/yarplogger</port>
+      <port>/icubSim/cam/left/rgbImage:o</port>
+      <port>/icubSim/cam/right/rgbImage:o</port>
+      <port>/icubSim/cam/left/depthImage:o</port>
+      <port>/icubSim/head/state:o</port>
+      <port>/iKinGazeCtrl/rpc</port>
+  </dependencies>
+
+  <module>
+      <name>assignment_web-contest-sandbox</name>
+      <parameters>--robot icubSim</parameters>
+      <environment>YARP_FORWARD_LOG_ENABLE=1</environment>
+      <node>localhost</node>
+  </module>
+
+  <module>
+      <name>yarpview</name>
+      <parameters>--name /viewer/left --x 10 --y 10 --compact</parameters>
+      <node>localhost</node>
+  </module>
+
+  <module>
+      <name>yarpview</name>
+      <parameters>--name /viewer/right --x 360 --y 10 --compact</parameters>
+      <node>localhost</node>
+  </module>
+
+  <connection>
+      <from>/icubSim/cam/left/rgbImage:o</from>
+      <to>/viewer/left</to>
+      <protocol>unix_stream</protocol>
+  </connection>
+
+  <connection>
+      <from>/icubSim/cam/right/rgbImage:o</from>
+      <to>/viewer/right</to>
+      <protocol>unix_stream</protocol>
+  </connection>
+
+  <connection>
+      <from>/icubSim/cam/left/rgbImage:o</from>
+      <to>/imgL:i</to>
+      <protocol>unix_stream</protocol>
+  </connection>
+
+  <connection>
+      <from>/icubSim/cam/right/rgbImage:o</from>
+      <to>/imgR:i</to>
+      <protocol>unix_stream</protocol>
+  </connection>
+
+  <connection>
+      <from>/icubSim/cam/left/depthImage:o</from>
+      <to>/depth:i</to>
+      <protocol>unix_stream</protocol>
+  </connection>
+
+</application>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Test Assignment on Web Contest Sandbox">
+    <description>Testing the assignment on Web Contest Sandbox</description>
+    <environment>--robotname icubSim</environment>
+    <fixture param="--fixture fixture.xml"> yarpmanager </fixture>
+
+    <test type="dll"> TestAssignmentWebContestSandbox </test>
+</suite>

@@ -18,8 +18,13 @@ We make use of the [Gitpod Cloud IDE](https://gitpod.io) as infrastructure. Find
 3. From within Gitpod, open up the browser at the port `6080` to get to the workspace desktop GUI.
 4. In the desktop GUI, open a terminal and run the grasping experiment:
    ```sh
-   $ gazebo web-contest-sandbox.sdf
+   $ cd /workspace/web-contest-sandbox/smoke-test
+   $ ./test.sh
    ```
+
+<p align="center">
+    <img src="./assets/objects-positions.png">
+</p>
 
 [1]: https://spectrum.chat/icub/technicalities/yarp-enabled-gitpod-workspaces-available~73ab5ee9-830e-4b7f-9e99-195295bb5e34
 [2]: https://gitpod.io/#https://github.com/easy-peasy-robotics/web-contest-sandbox

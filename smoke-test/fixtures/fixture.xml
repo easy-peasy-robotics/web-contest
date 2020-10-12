@@ -1,0 +1,79 @@
+<application>
+    <name>Fixture for Assignment on Web Contest Sandbox</name>
+    <description>A fixture to prepare components required for the assignment</description>
+    <version>1.0</version>
+    <authors>
+        <author email="ugo.pattacini@iit.it">Ugo Pattacini</author>
+    </authors>
+    <module>
+        <name>gzserver</name>
+        <parameters>web-contest-sandbox.sdf</parameters>
+        <node>testnode</node>
+    </module>
+    <module>
+        <name>gzclient</name>
+        <node>testnode</node>
+    </module>
+    <module>
+        <name>iKinGazeCtrl</name>
+        <parameters>--context gazeboCartesianControl --from iKinGazeCtrl.ini --torso off</parameters>
+        <dependencies>
+            <port timeout="10">/icubSim/head/state:o</port>
+            <port timeout="10">/icubSim/inertial</port>
+        </dependencies>
+        <ensure>
+            <wait>2</wait>
+        </ensure>
+        <node>testnode</node>
+    </module>
+    <module>
+        <name>assignment_web-contest-sandbox</name>
+        <parameters>--robot icubSim</parameters>
+        <dependencies>
+            <port timeout="10">/icubSim/head/state:o</port>
+            <port timeout="10">/iKinGazeCtrl/rpc</port>
+        </dependencies>
+        <node>testnode</node>
+    </module>
+    <module>
+        <name>yarpview</name>
+        <parameters>--name /viewer/left --x 10 --y 10 --compact</parameters>
+        <dependencies>
+            <port timeout="10">/service</port>
+        </dependencies>
+        <node>testnode</node>
+    </module>
+    <module>
+        <name>yarpview</name>
+        <parameters>--name /viewer/right --x 360 --y 10 --compact</parameters>
+        <dependencies>
+            <port timeout="10">/service</port>
+        </dependencies>
+        <node>testnode</node>
+    </module>
+    <connection>
+        <from>/icubSim/cam/left/rgbImage:o</from>
+        <to>/viewer/left</to>
+        <protocol>unix_stream</protocol>
+    </connection>
+    <connection>
+        <from>/icubSim/cam/right/rgbImage:o</from>
+        <to>/viewer/right</to>
+        <protocol>unix_stream</protocol>
+    </connection>
+    <connection>
+        <from>/icubSim/cam/left/rgbImage:o</from>
+        <to>/imgL:i</to>
+        <protocol>unix_stream</protocol>
+    </connection>
+    <connection>
+        <from>/icubSim/cam/right/rgbImage:o</from>
+        <to>/imgR:i</to>
+        <protocol>unix_stream</protocol>
+    </connection>
+    <connection>
+        <from>/icubSim/cam/left/depthImage:o</from>
+        <to>/depth:i</to>
+        <protocol>unix_stream</protocol>
+    </connection>
+</application>

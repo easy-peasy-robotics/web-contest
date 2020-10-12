@@ -1,0 +1,39 @@
+<application>
+
+  <name>Assignment on Web Contest Sandbox App icub</name>
+
+  <dependencies>
+      <port>/yarplogger</port>
+      <port>/icub/camcalib/left/out</port>
+      <port>/icub/camcalib/right/out</port>
+      <port>/SFM/disp:o</port>
+      <port>/icub/head/state:o</port>
+      <port>/iKinGazeCtrl/rpc</port>
+  </dependencies>
+
+  <module>
+      <name>assignment_web-contest-sandbox</name>
+      <parameters>--robot icub</parameters>
+      <environment>YARP_FORWARD_LOG_ENABLE=1</environment>
+      <node>localhost</node>
+  </module>
+
+  <connection>
+      <from>/icubSim/camcalib/left/out</from>
+      <to>/imgL:i</to>
+      <protocol>unix_stream</protocol>
+  </connection>
+
+  <connection>
+      <from>/icubSim/camcalib/right/out</from>
+      <to>/imgR:i</to>
+      <protocol>unix_stream</protocol>
+  </connection>
+
+  <connection>
+      <from>/SFM/disp:o</from>
+      <to>/depth:i</to>
+      <protocol>unix_stream</protocol>
+  </connection>
+
+</application>

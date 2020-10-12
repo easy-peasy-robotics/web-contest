@@ -25,7 +25,6 @@
 
 #include <yarp/math/Math.h>
 
-#include <yarp/cv/Cv.h>
 #include <yarp/pcl/Pcl.h>
 
 /*************************************************************************************/

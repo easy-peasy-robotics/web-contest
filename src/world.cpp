@@ -72,12 +72,14 @@ class WorldHandler : public gazebo::WorldPlugin
         auto seed = std::chrono::system_clock::now().time_since_epoch().count();
         std::shuffle(std::begin(idx), std::end(idx), std::default_random_engine(seed));
 
+        const auto Z = .7;
         std::vector<ignition::math::Pose3d> poses;
         std::vector<int> table_positions;
         for (auto& m:models) {
             auto pose = m.model->WorldPose();
             if (move_first) {
                 pose.Pos().X() += -.3;
+                pose.Pos().Z() = Z;
                 m.model->SetWorldPose(pose);
             }
             poses.push_back(pose);
@@ -94,7 +96,7 @@ class WorldHandler : public gazebo::WorldPlugin
 
             const auto p = poses[j].Pos();
             const auto q = poses[j].Rot() * ignition::math::Quaterniond(std::cos(ang), 0., 0., std::sin(ang));
-            ignition::math::Pose3d pose_i(p.X() + .3, p.Y(), p.Z(), q.W(), q.X(), q.Y(), q.Z());
+            ignition::math::Pose3d pose_i(p.X() + .3, p.Y(), Z, q.W(), q.X(), q.Y(), q.Z());
 
             auto& m = models[i];
             m.model->SetWorldPose(pose_i);

@@ -6,7 +6,7 @@
         <geometry>
             <mesh>
                 <uri> model://fallback-1/mesh.stl </uri>
-                <scale>0.002 0.002 0.002</scale>
+                <scale>0.0025 0.0025 0.0025</scale>
             </mesh>
         </geometry>
       </collision>
@@ -14,7 +14,7 @@
         <geometry>
             <mesh>
                 <uri> model://fallback-1/mesh.stl </uri>
-                <scale>0.002 0.002 0.002</scale>
+                <scale>0.0025 0.0025 0.0025</scale>
             </mesh>
         </geometry>
       </visual>

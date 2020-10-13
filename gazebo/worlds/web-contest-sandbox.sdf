@@ -43,22 +43,22 @@
 
     <include>
       <uri>model://fallback-1</uri>
-      <pose>-0.6 -0.225 0.51 0 0 0</pose>
+      <pose>-0.6 -0.3 0.7 0 0 0</pose>
     </include>
 
     <include>
       <uri>model://fallback-2</uri>
-      <pose>-0.6 -0.075 0.51 0 0 0</pose>
+      <pose>-0.6 -0.1 0.7 0 0 0</pose>
     </include>
 
     <include>
       <uri>model://fallback-3</uri>
-      <pose>-0.6 0.075 0.51 0 0 0</pose>
+      <pose>-0.6 0.1 0.7 0 0 0</pose>
     </include>
 
     <include>
       <uri>model://object</uri>
-      <pose>-0.6 0.225 0.51 0 0 0</pose>
+      <pose>-0.6 0.3 0.7 0 0 0</pose>
     </include>
 
     <model name="icub_head_epr">

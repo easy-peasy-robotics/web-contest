@@ -110,12 +110,8 @@ class Module: public yarp::os::RFModule {
     }
 
     /*********************************************************************************/
-    double getPeriod() override {
-        return 1.;
-    }
-
-    /*********************************************************************************/
     bool updateModule() override {
+        // updateModule() won't be executed because of the VTK thread
         return true;
     }
 

@@ -29,32 +29,18 @@
 
 /*************************************************************************************/
 class Module: public yarp::os::RFModule {
-    bool simulation{true};
-
-    yarp::dev::PolyDriver driverHead;
     yarp::dev::PolyDriver driverGaze;
     yarp::dev::IGazeControl* igaze;
     double fov_h{0.};
 
-    yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb>> imgLPort;
-    yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb>> imgRPort;
+    yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb>> imgPort;
     yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat>> depthPort;
     yarp::os::RpcServer rpcPort;
 
     /*********************************************************************************/
     bool configure(yarp::os::ResourceFinder& rf) override {
-        auto robot = rf.check("robot", yarp::os::Value("icubSim")).asString();
-        simulation = (robot == "icubSim");
-
-        yarp::os::Property optionsHead;
-        optionsHead.put("device", "remote_controlboard");
-        optionsHead.put("remote", "/" + robot + "/head");
-        optionsHead.put("local", "/head");
-        if (!driverHead.open(optionsHead)) {
-            yError() << "Unable to connect to the robot head";
-            return false;
-        }
-
+        // let's use the IGazeControl I/F to move the gaze
+        // and acquire useful information
         yarp::os::Property optionsGaze;
         optionsGaze.put("device", "gazecontrollerclient");
         optionsGaze.put("remote", "/iKinGazeCtrl");
@@ -63,7 +49,6 @@ class Module: public yarp::os::RFModule {
             driverGaze.view(igaze);
         } else {
             yError() << "Unable to connect to iKinGazeCtrl";
-            driverHead.close();
             return false;
         }
 
@@ -72,30 +57,37 @@ class Module: public yarp::os::RFModule {
         igaze->getInfo(info);
         fov_h = info.find("camera_intrinsics_left").asList()->get(0).asDouble();
 
-        imgLPort.open("/imgL:i");
-        imgRPort.open("/imgR:i");
+        imgPort.open("/img:i");
         depthPort.open("/depth:i");
 
         rpcPort.open("/service");
         attach(rpcPort);
+
+        // block the eyes vergence to a predefined value
+        // that will work with the pyshical robot
+        igaze->blockEyes(5.);
+
+        // look down at the table {azimuth, elevantion, vergence}
+        // (vergence is blocked but the service needs it anyway)
+        igaze->lookAtAbsAnglesSync({0., -40., 5.});
+
+        // wait until the movement is over
+        igaze->waitMotionDone();
 
         return true;
     }
 
     /*********************************************************************************/
     bool interruptModule() override {
-        imgLPort.interrupt();
-        imgRPort.interrupt();
+        imgPort.interrupt();
         depthPort.interrupt();
         return true;
     }
 
     /*********************************************************************************/
     bool close() override {
-        driverHead.close();
         driverGaze.close();
-        imgLPort.close();
-        imgRPort.close();
+        imgPort.close();
         depthPort.close();
         rpcPort.close();
         return true;
@@ -107,7 +99,7 @@ class Module: public yarp::os::RFModule {
         if (cmd.get(0).asVocab() == yarp::os::Vocab::encode("go")) {
             reply.addInt(go());
         } else {
-            // the father class already handles the "quit" command
+            // the parent class handles the "quit" command
             return yarp::os::RFModule::respond(cmd, reply);
         }
         return true;
@@ -119,7 +111,7 @@ class Module: public yarp::os::RFModule {
     }
 
     /*********************************************************************************/
-    auto get_pointcloud(const yarp::sig::ImageOf<yarp::sig::PixelRgb>& imgL,
+    auto get_pointcloud(const yarp::sig::ImageOf<yarp::sig::PixelRgb>& img,
                         const yarp::sig::ImageOf<yarp::sig::PixelFloat>& depth,
                         const yarp::sig::Matrix& Teye) const {
         // aggregate image data in the point cloud of the whole scene
@@ -129,7 +121,7 @@ class Module: public yarp::os::RFModule {
         yarp::sig::Vector x{0., 0., 0., 1.};
         for (int v = 0; v < h; v++) {
             for (int u = 0; u < w; u++) {
-                const auto rgb = imgL(u, v);
+                const auto rgb = img(u, v);
                 const auto d = depth(u, v);
                 
                 if (d > 0.F) {
@@ -156,12 +148,11 @@ class Module: public yarp::os::RFModule {
     /*********************************************************************************/
     bool updateModule() override {
         // get fresh images
-        auto* imgL = imgLPort.read();
-        auto* imgR = imgRPort.read();
+        auto* img = imgPort.read();
         auto* depth = depthPort.read();
 
         // interrupt sequence detected
-        if ((imgL == nullptr) || (imgR == nullptr) || (depth == nullptr)) {
+        if ((img == nullptr) || (depth == nullptr)) {
             return false;
         }
 
@@ -171,6 +162,7 @@ class Module: public yarp::os::RFModule {
         // so that we can then deal with the proper coordinates
         // system to finally determine the position of the object
         // on the table
+        // ⚠ do this when the gaze is stationary!
         yarp::sig::Vector cam_x, cam_o;
         igaze->getLeftEyePose(cam_x, cam_o);
         auto Teye = yarp::math::axis2dcm(cam_o);
@@ -180,7 +172,7 @@ class Module: public yarp::os::RFModule {
 
         // when you aim to get the point cloud of the scene
         // just call the following:
-        // auto pc = get_pointcloud(*imgL, *depth, Teye);
+        // auto pc = get_pointcloud(*img, *depth, Teye);
         
         return true;
     }

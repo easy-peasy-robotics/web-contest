@@ -13,20 +13,13 @@
 
   <module>
       <name>assignment_web-contest-sandbox</name>
-      <parameters>--robot icub</parameters>
       <environment>YARP_FORWARD_LOG_ENABLE=1</environment>
       <node>localhost</node>
   </module>
 
   <connection>
       <from>/icubSim/camcalib/left/out</from>
-      <to>/imgL:i</to>
-      <protocol>unix_stream</protocol>
-  </connection>
-
-  <connection>
-      <from>/icubSim/camcalib/right/out</from>
-      <to>/imgR:i</to>
+      <to>/img:i</to>
       <protocol>unix_stream</protocol>
   </connection>
 

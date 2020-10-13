@@ -28,7 +28,6 @@
     </module>
     <module>
         <name>assignment_web-contest-sandbox</name>
-        <parameters>--robot icubSim</parameters>
         <dependencies>
             <port timeout="10">/icubSim/head/state:o</port>
             <port timeout="10">/iKinGazeCtrl/rpc</port>
@@ -37,15 +36,7 @@
     </module>
     <module>
         <name>yarpview</name>
-        <parameters>--name /viewer/left --x 10 --y 10 --compact</parameters>
-        <dependencies>
-            <port timeout="10">/service</port>
-        </dependencies>
-        <node>testnode</node>
-    </module>
-    <module>
-        <name>yarpview</name>
-        <parameters>--name /viewer/right --x 360 --y 10 --compact</parameters>
+        <parameters>--name /viewer --x 10 --y 10 --compact</parameters>
         <dependencies>
             <port timeout="10">/service</port>
         </dependencies>
@@ -53,22 +44,12 @@
     </module>
     <connection>
         <from>/icubSim/cam/left/rgbImage:o</from>
-        <to>/viewer/left</to>
-        <protocol>unix_stream</protocol>
-    </connection>
-    <connection>
-        <from>/icubSim/cam/right/rgbImage:o</from>
-        <to>/viewer/right</to>
+        <to>/viewer</to>
         <protocol>unix_stream</protocol>
     </connection>
     <connection>
         <from>/icubSim/cam/left/rgbImage:o</from>
-        <to>/imgL:i</to>
-        <protocol>unix_stream</protocol>
-    </connection>
-    <connection>
-        <from>/icubSim/cam/right/rgbImage:o</from>
-        <to>/imgR:i</to>
+        <to>/img:i</to>
         <protocol>unix_stream</protocol>
     </connection>
     <connection>

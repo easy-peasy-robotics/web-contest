@@ -47,6 +47,10 @@ class Module: public yarp::os::RFModule {
     /*********************************************************************************/
     bool configure(yarp::os::ResourceFinder& rf) override {
         std::string object_model_file = rf.findFile("models/object/mesh.stl");
+        if (object_model_file.empty()) {
+            yError() << "Unable to locate \"models/object/mesh.stl\"";
+            return false;
+        }
 
         // let's use the IGazeControl I/F to move the gaze
         // and acquire useful information

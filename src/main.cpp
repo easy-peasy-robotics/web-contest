@@ -7,6 +7,8 @@
 #include <string>
 #include <cmath>
 
+#include <Eigen/Eigen>
+
 #include <yarp/os/ResourceFinder.h>
 #include <yarp/os/RFModule.h>
 #include <yarp/os/Value.h>
@@ -42,13 +44,14 @@ class Module: public yarp::os::RFModule {
     yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat>> depthPort;
     yarp::os::RpcServer rpcPort;
 
+    std::string object_model;
     std::unique_ptr<viewer::Viewer> viewer;
 
     /*********************************************************************************/
     bool configure(yarp::os::ResourceFinder& rf) override {
-        std::string object_model_file = rf.findFile("models/object/mesh.stl");
-        if (object_model_file.empty()) {
-            yError() << "Unable to locate \"models/object/mesh.stl\"";
+        object_model = rf.findFile("models/object/mesh.stl");
+        if (object_model.empty()) {
+            yError() << "Unable to locate the model";
             return false;
         }
 
@@ -210,7 +213,11 @@ class Module: public yarp::os::RFModule {
             explore_table(azimuth, elevation);
             auto pc = acquire_scene();
 
-            // FILL IN THE CODE
+            Eigen::Matrix4d T = Eigen::Matrix4d::Identity();
+            T(0,3) = -.45;
+            T(1,3) = 0.;
+            T(2,3) = -.1;
+            viewer->showModel(object_model, .0025, T);
             k = 1;
         }
         

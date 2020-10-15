@@ -24,7 +24,7 @@
   </connection>
 
   <connection>
-      <from>/SFM/disp:o</from>
+      <from>/DisparityModule/disp:o</from>
       <to>/depth:i</to>
       <protocol>unix_stream</protocol>
   </connection>

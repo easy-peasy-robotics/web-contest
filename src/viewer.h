@@ -190,7 +190,7 @@ public:
 
     /**************************************************************************/
     void showModel(const std::string& model, const double scale,
-                   const Eigen::Matrix4d& T) {
+                   const Eigen::Matrix4d& pose, const double opacity) {
         std::lock_guard<std::mutex> lck(mtx);
         if (vtk_mdl_actor) {
             vtk_renderer->RemoveActor(vtk_mdl_actor);
@@ -205,16 +205,18 @@ public:
 
         vtk_mdl_actor = vtkSmartPointer<vtkActor>::New();
         vtk_mdl_actor->SetMapper(vtk_mdl_mapper);
+        vtk_mdl_actor->GetProperty()->SetColor(0., 1., 0.);
+        vtk_mdl_actor->GetProperty()->SetOpacity(opacity);
 
         Eigen::Vector3d v;
-        v(0) = T(2,1) - T(1,2);
-        v(1) = T(0,2) - T(2,0);
-        v(2) = T(1,0) - T(0,1);
+        v(0) = pose(2,1) - pose(1,2);
+        v(1) = pose(0,2) - pose(2,0);
+        v(2) = pose(1,0) - pose(0,1);
         const auto r = std::sqrt(v(0)*v(0) + v(1)*v(1) + v(2)*v(2));
-        const auto angle = (180. / M_PI) * std::atan2(.5 * r, .5 * (T(0,0) + T(1,1) + T(2,2) - 1.));
+        const auto angle = (180. / M_PI) * std::atan2(.5 * r, .5 * (pose(0,0) + pose(1,1) + pose(2,2) - 1.));
 
         vtk_mdl_transform = vtkSmartPointer<vtkTransform>::New();
-        vtk_mdl_transform->Translate(T(0,3), T(1,3), T(2,3));
+        vtk_mdl_transform->Translate(pose(0,3), pose(1,3), pose(2,3));
         vtk_mdl_transform->RotateWXYZ(angle, v(0)/r, v(1)/r, v(2)/r);
         vtk_mdl_transform->Scale(scale, scale, scale);
         vtk_mdl_actor->SetUserTransform(vtk_mdl_transform);

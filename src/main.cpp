@@ -213,11 +213,12 @@ class Module: public yarp::os::RFModule {
             explore_table(azimuth, elevation);
             auto pc = acquire_scene();
 
-            Eigen::Matrix4d T = Eigen::Matrix4d::Identity();
-            T(0,3) = -.45;
-            T(1,3) = 0.;
-            T(2,3) = -.1;
-            viewer->showModel(object_model, .0025, T);
+            const auto scale{.0025};
+            const auto opacity{.2};
+            Eigen::Matrix4d pose = Eigen::Matrix4d::Identity();
+            pose.block<3,1>(0,3) = Eigen::Vector3d(-.45, 0., -.1);
+            pose.block<3,3>(0,0) = Eigen::AngleAxisd(M_PI, Eigen::Vector3d::UnitZ()).toRotationMatrix();
+            viewer->showModel(object_model, scale, pose, opacity);
             k = 1;
         }
         

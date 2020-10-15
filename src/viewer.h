@@ -9,10 +9,14 @@
 #define VIEWER_H
 
 #include <mutex>
+#include <string>
 #include <vector>
+#include <cmath>
 
 #include <vtkSmartPointer.h>
 #include <vtkCommand.h>
+#include <vtkSTLReader.h>
+#include <vtkTransform.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkPointData.h>
 #include <vtkUnsignedCharArray.h>
@@ -28,6 +32,8 @@
 #include <vtkRenderer.h>
 #include <vtkCamera.h>
 #include <vtkInteractorStyleSwitch.h>
+
+#include <Eigen/Eigen>
 
 #include <yarp/sig/PointCloud.h>
 
@@ -82,6 +88,10 @@ class Viewer {
     vtkSmartPointer<vtkPolyData>               vtk_pc_polydata{nullptr};
     vtkSmartPointer<vtkVertexGlyphFilter>      vtk_pc_filter{nullptr};
     vtkSmartPointer<vtkActor>                  vtk_pc_actor{nullptr};
+    vtkSmartPointer<vtkSTLReader>              vtk_mdl_reader{nullptr};
+    vtkSmartPointer<vtkPolyDataMapper>         vtk_mdl_mapper{nullptr};
+    vtkSmartPointer<vtkTransform>              vtk_mdl_transform{nullptr};
+    vtkSmartPointer<vtkActor>                  vtk_mdl_actor{nullptr};
 
 public:
     /**************************************************************************/
@@ -176,6 +186,40 @@ public:
         vtk_pc_actor->GetProperty()->SetPointSize(1);
 
         vtk_renderer->AddActor(vtk_pc_actor);
+    }
+
+    /**************************************************************************/
+    void showModel(const std::string& model, const double scale,
+                   const Eigen::Matrix4d& T) {
+        std::lock_guard<std::mutex> lck(mtx);
+        if (vtk_mdl_actor) {
+            vtk_renderer->RemoveActor(vtk_mdl_actor);
+        }
+
+        vtk_mdl_reader = vtkSmartPointer<vtkSTLReader>::New();
+        vtk_mdl_reader->SetFileName(model.c_str());
+        vtk_mdl_reader->Update();
+
+        vtk_mdl_mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+        vtk_mdl_mapper->SetInputConnection(vtk_mdl_reader->GetOutputPort());
+
+        vtk_mdl_actor = vtkSmartPointer<vtkActor>::New();
+        vtk_mdl_actor->SetMapper(vtk_mdl_mapper);
+
+        Eigen::Vector3d v;
+        v(0) = T(2,1) - T(1,2);
+        v(1) = T(0,2) - T(2,0);
+        v(2) = T(1,0) - T(0,1);
+        const auto r = std::sqrt(v(0)*v(0) + v(1)*v(1) + v(2)*v(2));
+        const auto angle = (180. / M_PI) * std::atan2(.5 * r, .5 * (T(0,0) + T(1,1) + T(2,2) - 1.));
+
+        vtk_mdl_transform = vtkSmartPointer<vtkTransform>::New();
+        vtk_mdl_transform->Translate(T(0,3), T(1,3), T(2,3));
+        vtk_mdl_transform->RotateWXYZ(angle, v(0)/r, v(1)/r, v(2)/r);
+        vtk_mdl_transform->Scale(scale, scale, scale);
+        vtk_mdl_actor->SetUserTransform(vtk_mdl_transform);
+
+        vtk_renderer->AddActor(vtk_mdl_actor);
     }
 };
 

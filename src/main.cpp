@@ -52,7 +52,7 @@ class Module: public yarp::os::RFModule {
 
     /*********************************************************************************/
     bool configure(yarp::os::ResourceFinder& rf) override {
-        auto simulation = rf.check("simulation");
+        const auto simulation = rf.check("simulation");
         object_model = rf.findFile("models/object/mesh.stl");
         if (object_model.empty()) {
             yError() << "Unable to locate the model";

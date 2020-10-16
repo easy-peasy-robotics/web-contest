@@ -6,7 +6,8 @@
       <port>/yarplogger</port>
       <port>/icub/camcalib/left/out</port>
       <port>/icub/camcalib/right/out</port>
-      <port>/SFM/disp:o</port>
+      <port>/depthCamera/rpc:i</port>
+      <port>/depthCamera/depthImage:o</port>
       <port>/icub/head/state:o</port>
       <port>/iKinGazeCtrl/rpc</port>
   </dependencies>
@@ -24,7 +25,13 @@
   </connection>
 
   <connection>
-      <from>/DisparityModule/disp:o</from>
+      <from>/cam:rpc</from>
+      <to>/depthCamera/rpc:i</to>
+      <protocol>tcp</protocol>
+  </connection>
+
+  <connection>
+      <from>/depthCamera/depthImage:o</from>
       <to>/depth:i</to>
       <protocol>unix_stream</protocol>
   </connection>

@@ -14,12 +14,15 @@
 #include <yarp/os/Value.h>
 #include <yarp/os/Vocab.h>
 #include <yarp/os/BufferedPort.h>
+#include <yarp/os/RpcClient.h>
 #include <yarp/os/RpcServer.h>
 #include <yarp/os/Property.h>
 #include <yarp/os/LogStream.h>
 
 #include <yarp/dev/PolyDriver.h>
 #include <yarp/dev/GazeControl.h>
+#include <yarp/dev/IVisualParams.h>
+#include <yarp/dev/GenericVocabs.h>
 
 #include <yarp/sig/Image.h>
 #include <yarp/sig/PointCloud.h>
@@ -37,11 +40,11 @@ class Module: public yarp::os::RFModule {
     yarp::dev::PolyDriver driverGaze;
     yarp::dev::IGazeControl* igaze;
     double fov_h{0.};
-    double view_angle{0.};
     bool stopping{false};
 
     yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb>> imgPort;
     yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat>> depthPort;
+    yarp::os::RpcClient camPort;
     yarp::os::RpcServer rpcPort;
 
     std::string object_model;
@@ -49,6 +52,7 @@ class Module: public yarp::os::RFModule {
 
     /*********************************************************************************/
     bool configure(yarp::os::ResourceFinder& rf) override {
+        const auto simulation = rf.check("simulation");
         object_model = rf.findFile("models/object/mesh.stl");
         if (object_model.empty()) {
             yError() << "Unable to locate the model";
@@ -68,19 +72,27 @@ class Module: public yarp::os::RFModule {
             return false;
         }
 
-        // get camera intrinsics
-        yarp::os::Bottle info;
-        igaze->getInfo(info);
-        auto intrinsics = info.find("camera_intrinsics_left").asList();
-        fov_h = intrinsics->get(0).asDouble();
-        auto w_2 = intrinsics->get(2).asDouble();
-        view_angle = 2. * std::atan(w_2 / fov_h) * (180. / M_PI);
-
         imgPort.open("/img:i");
         depthPort.open("/depth:i");
+        camPort.open("/cam:rpc");
 
         rpcPort.open("/service");
         attach(rpcPort);
+
+        // get camera intrinsics
+        if (simulation) {
+            yarp::os::Bottle info;
+            igaze->getInfo(info);
+            auto intrinsics = info.find("camera_intrinsics_left").asList();
+            fov_h = intrinsics->get(0).asDouble();
+        } else {
+            yarp::os::Bottle cmd, rep;
+            cmd.addVocab(VOCAB_RGB_VISUAL_PARAMS);
+            cmd.addVocab(VOCAB_GET);
+            cmd.addVocab(VOCAB_FOV);
+            camPort.write(cmd, rep);
+            fov_h = rep.get(3).asDouble();
+        }
 
         // block the eyes vergence to a predefined value
         // that will work with the pyshical robot
@@ -114,6 +126,7 @@ class Module: public yarp::os::RFModule {
         driverGaze.close();
         imgPort.close();
         depthPort.close();
+        camPort.close();
         rpcPort.close();
         return true;
     }
@@ -164,8 +177,7 @@ class Module: public yarp::os::RFModule {
         auto Teye = yarp::math::axis2dcm(cam_o);
         Teye.setSubcol(cam_x, 0, 3);
 
-        // when you aim to get the point cloud of the scene
-        // just call the following:
+        // get the point cloud aggregating rgb and depth info
         const auto w = depth->width();
         const auto h = depth->height();
         auto pc = std::make_shared<yarp::sig::PointCloud<yarp::sig::DataXYZRGBA>>();
@@ -195,6 +207,7 @@ class Module: public yarp::os::RFModule {
         }
 
         // 3D visualization
+        const auto view_angle{2. * std::atan((w / 2.) / fov_h) * (180. / M_PI)};
         viewer->setCamera({cam_x[0], cam_x[1], cam_x[2]},
                           {cam_x[0] + Teye(0, 2), cam_x[1] + Teye(1, 2), cam_x[2] + Teye(2, 2)},
                           {0., 0., 1.}, view_angle);

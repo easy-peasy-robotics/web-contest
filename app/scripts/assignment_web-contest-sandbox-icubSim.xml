@@ -13,6 +13,7 @@
 
   <module>
       <name>assignment_web-contest-sandbox</name>
+      <parameters>--simulation</parameters>
       <environment>YARP_FORWARD_LOG_ENABLE=1</environment>
       <node>localhost</node>
   </module>

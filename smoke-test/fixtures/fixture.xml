@@ -28,6 +28,7 @@
     </module>
     <module>
         <name>assignment_web-contest-sandbox</name>
+        <parameters>--simulation</parameters>
         <dependencies>
             <port timeout="10">/icubSim/head/state:o</port>
             <port timeout="10">/iKinGazeCtrl/rpc</port>

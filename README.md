@@ -33,6 +33,11 @@ Bear in mind the following important aspects:
   you are required to return the position of your object in the allowed set {1, 2, 3, 4}.
 - The smoke-test will interrogate your module 3 times in a row by changing the scenario and you will have to
   respond to each request within **120 s** to prevent timeout expiration.
+  
+Moreover, to address the motor control part, you can make use of standard joint interfaces (position, velocity...), although
+our recommendation is that you exploit an operational space approach for controlling the gaze as discussed [here](https://robotology.github.io/robotology-documentation/doc/html/icub_gaze_interface.html) 🌐
+
+In particular, the contest code already contains boilerplate snippets to operate with the corresponding [IGazeControl interface](http://yarp.it/classyarp_1_1dev_1_1IGazeControl.html).
 
 ### ☁ Instructions to run the sandbox on the web
 1. This is a Gitpod-enabled sandbox, so to get started click on `https://gitpod.io/#https://github.com/easy-peasy-robotics/your-sandbox`

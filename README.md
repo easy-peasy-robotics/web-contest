@@ -6,7 +6,7 @@ Dear participants, after days of hard work 💪🏻 you reached the final fronti
 
 To complete the crash course, we would like you to develop a demo to run both on the simulated and
 physical robot that requires reusing all the components you have studied thus far, including CAD design,
-YARP, PID Control, and Computer Vision.
+YARP, Motor Control, and Computer Vision.
 
 You will be working in teams that will compete to win the first prize for the most awesome
 and effective demo ✨

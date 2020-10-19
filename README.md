@@ -60,9 +60,9 @@ Optimize the resources by assigning teammates specific tasks so that some will d
 some other will deal with the motor control and others will be responsible for vision recognition.
 
 Coordinating several developers working remotely certainly introduces overhead. To this end:
-- Leverage on GitHub tools (issues, PR).
-- Foresee intermediate milestones and frequent meetups to get everyone aligned on the same page.
-- Gauge the progress and handle unexpected events.
+- Leverage on GitHub tools (issues, PR...).
+- Foresee intermediate milestones and frequent meetups to get everyone aligned on the same page,
+  and to gauge progress and handle unexpected delays.
 
 Also, you may find the option for [sharing Gitpod workspaces](https://www.gitpod.io/docs/sharing-and-collaboration/#collaboration--sharing-of-workspaces)
 quite useful in certain circumstances.

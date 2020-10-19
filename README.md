@@ -18,7 +18,7 @@ and effective demo ✨
 1. Your object will be part of a set of 4 objects in total that will be randomly presented to the robot as shown in the figure below.
 1. Using your developers' abilities, analyze and expand the code in [`main.cpp`](./src/main.cpp) to let the iCub explore the world
    and detect where your specific object is located, that is whether in **position 1, 2, 3 or 4**.
-1. Try to be neat and informative and document your decisions, progress and solution within the repository.
+1. Try to be neat and informative and document within the repository the decisions taken by the team, the progress and the overall solution.
 
 <p align="center">
     <img src="./assets/objects-positions.png">

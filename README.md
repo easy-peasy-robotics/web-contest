@@ -64,8 +64,8 @@ on the same page, gauge the progress and handle unexpected events.
 Also, you may find the option for [sharing Gitpod workspaces](https://www.gitpod.io/docs/sharing-and-collaboration/#collaboration--sharing-of-workspaces)
 quite useful in certain circumstances.
 
-Remeber to not rely on the appearance of fallback objects, as the physical setting where you
-are going to put to test your object as well as codebase will be different from the sandbox.
+Remember not to rely on the appearance of fallback objects, as the physical setting where you
+are going to put to test your object as well as the codebase will be different from the sandbox.
 
 ## 🏆 Evaluation Criteria
 In descending priority order:

@@ -32,7 +32,7 @@ Bear in mind the following important aspects:
 - The entry point to your code needs to be the request **`go`** sent to the RPC port `/service`, to which
   you are required to return the position of your object in the allowed set {1, 2, 3, 4}.
 - The smoke-test will interrogate your module 3 times in a row by changing the scenario and you will have to
-  respond to each request within **120 s** to prevent timeout from expiring.
+  respond to each request within **120 s** to prevent timeout expiration.
 
 ### ☁ Instructions to run the sandbox on the web
 1. This is a Gitpod-enabled sandbox, so to get started click on `https://gitpod.io/#https://github.com/easy-peasy-robotics/your-sandbox`

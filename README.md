@@ -67,9 +67,6 @@ quite useful in certain circumstances.
 Remeber to not rely on the appearance of fallback objects, as the physical setting where you
 are going to put to test your object as well as codebase will be different from the sandbox.
 
-## 🤖 Run the demo with the physical iCub
-
-
 ## 🏆 Evaluation Criteria
 In descending priority order:
 - How the 🤖 behaves overall (e.g. efficiency, stability, robustness, predictability).

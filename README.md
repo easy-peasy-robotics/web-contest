@@ -31,7 +31,7 @@ launching the script `./test.sh` in the [`./smoke-test`](./smoke-test) directory
 Bear in mind the following important aspects:
 - The entry point to your code needs to be the request **`go`** sent to the RPC port `/service`, to which
   you are required to return the position of your object in the allowed set {1, 2, 3, 4}.
-- The smoke-test will interrogate your module 3 times in a row by changing the scenario and you will have to
+- The smoke-test will interrogate your module multiple times in a row by changing the scenario and you will have to
   respond to each request within **120 s** to prevent timeout expiration.
   
 Moreover, to address the motor control part, you can make use of standard joint interfaces (position, velocity...), although

@@ -13,7 +13,7 @@ and effective demo ✨
 
 ## 🎯 Objectives
 1. Your team will be given specifications for CAD designing a particular object.
-1. Put the mesh of the object in the location [./gazebo/models/object](./gazebo/models/object), overwriting the existing `mesh.stl`.
+1. Put the mesh of the object in the location [`./gazebo/models/object/.`](./gazebo/models/object), overwriting the existing `mesh.stl`.
 1. Adjust the dimensions by fiddling with the parameters in the corresponding [`./gazebo/models/object/model.sdf`](./gazebo/models/object/model.sdf).
 1. Your object will be part of a set of 4 objects in total that will be randomly presented to the robot as shown in the figure below.
 1. Using your developers' abilities, analyze and expand the code in [`./src/main.cpp`](./src/main.cpp) to let the iCub explore the world

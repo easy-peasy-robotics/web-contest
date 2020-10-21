@@ -226,7 +226,7 @@ class Module: public yarp::os::RFModule {
             explore_table(azimuth, elevation);
             auto pc = acquire_scene();
 
-            const auto scale{.0025};
+            const auto scale{.002};
             const auto opacity{.2};
             Eigen::Matrix4d pose = Eigen::Matrix4d::Identity();
             pose.block<3,1>(0,3) = Eigen::Vector3d(-.45, 0., -.1);

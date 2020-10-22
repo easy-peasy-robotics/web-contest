@@ -9,6 +9,7 @@
 
 #include <Eigen/Eigen>
 
+#include <yarp/os/Network.h>
 #include <yarp/os/ResourceFinder.h>
 #include <yarp/os/RFModule.h>
 #include <yarp/os/Value.h>
@@ -72,12 +73,7 @@ class Module: public yarp::os::RFModule {
             return false;
         }
 
-        imgPort.open("/img:i");
-        depthPort.open("/depth:i");
         camPort.open("/cam:rpc");
-
-        rpcPort.open("/service");
-        attach(rpcPort);
 
         // get camera intrinsics
         if (simulation) {
@@ -86,6 +82,11 @@ class Module: public yarp::os::RFModule {
             auto intrinsics = info.find("camera_intrinsics_left").asList();
             fov_h = intrinsics->get(0).asDouble();
         } else {
+            if (!yarp::os::Network::connect(camPort.getName(), "/depthCamera/rpc:i")) {
+                yError() << "Unable to connect to depthCamera";
+                driverGaze.close();
+                return false;
+            }
             yarp::os::Bottle cmd, rep;
             cmd.addVocab(VOCAB_RGB_VISUAL_PARAMS);
             cmd.addVocab(VOCAB_GET);
@@ -93,6 +94,11 @@ class Module: public yarp::os::RFModule {
             camPort.write(cmd, rep);
             fov_h = rep.get(3).asDouble();
         }
+
+        imgPort.open("/img:i");
+        depthPort.open("/depth:i");
+        rpcPort.open("/service");
+        attach(rpcPort);
 
         // block the eyes vergence to a predefined value
         // that will work with the pyshical robot

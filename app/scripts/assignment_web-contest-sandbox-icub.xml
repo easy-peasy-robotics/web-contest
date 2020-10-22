@@ -19,15 +19,9 @@
   </module>
 
   <connection>
-      <from>/icubSim/camcalib/left/out</from>
+      <from>/depthCamera/rgbImage:o</from>
       <to>/img:i</to>
       <protocol>unix_stream</protocol>
-  </connection>
-
-  <connection>
-      <from>/cam:rpc</from>
-      <to>/depthCamera/rpc:i</to>
-      <protocol>tcp</protocol>
   </connection>
 
   <connection>

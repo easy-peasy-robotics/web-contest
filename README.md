@@ -72,8 +72,14 @@ Coordinating several developers working remotely certainly introduces overhead. 
 Also, you may find the option for [sharing Gitpod workspaces](https://www.gitpod.io/docs/sharing-and-collaboration/#collaboration--sharing-of-workspaces)
 quite useful in certain circumstances.
 
-Remember not to rely on the appearance of fallback objects, as the physical setting where you
-are going to put to test your object as well as the codebase will be different from the sandbox.
+Do not rely on the appearance of fallback objects, as the physical setting where you are going to put
+to test your object as well as the codebase will be different from the sandbox.
+
+Furthermore, if your object is similar to one particular fallback object, you may consider replacing
+the latter interfering with yours with copies of other more neutral fallback objects.
+
+Lastly, remember that you can rotate your object in Gazebo in order to make it lie on the table
+in a stable position.
 
 ## 🏆 Evaluation Criteria
 In descending priority order:

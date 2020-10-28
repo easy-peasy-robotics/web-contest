@@ -39,6 +39,13 @@ our recommendation is that you exploit an operational space approach for control
 
 In particular, the contest code already contains boilerplate snippets to operate with the corresponding [IGazeControl interface](http://yarp.it/classyarp_1_1dev_1_1IGazeControl.html).
 
+### 📐 Objects
+- Do not rely on the appearance of fallback objects, as the physical setting where you are going to put
+  to test your object as well as the codebase will be different from the sandbox.
+- If your object is similar to one particular fallback object, you may consider replacing
+  the latter interfering with yours with copies of other more neutral fallback objects.
+- Remember that you can rotate your object in Gazebo in order to let it lie on the table in a stable configuration.
+
 ### ☁ Instructions to run the sandbox on the web
 1. This is a Gitpod-enabled sandbox, so to get started click on `https://gitpod.io/#https://github.com/easy-peasy-robotics/your-sandbox`
 
@@ -71,15 +78,6 @@ Coordinating several developers working remotely certainly introduces overhead. 
 
 Also, you may find the option for [sharing Gitpod workspaces](https://www.gitpod.io/docs/sharing-and-collaboration/#collaboration--sharing-of-workspaces)
 quite useful in certain circumstances.
-
-Do not rely on the appearance of fallback objects, as the physical setting where you are going to put
-to test your object as well as the codebase will be different from the sandbox.
-
-Furthermore, if your object is similar to one particular fallback object, you may consider replacing
-the latter interfering with yours with copies of other more neutral fallback objects.
-
-Lastly, remember that you can rotate your object in Gazebo in order to make it lie on the table
-in a stable position.
 
 ## 🏆 Evaluation Criteria
 In descending priority order:

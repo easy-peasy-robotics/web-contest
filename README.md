@@ -45,6 +45,7 @@ In particular, the contest code already contains boilerplate snippets to operate
 - If your object is similar to one particular fallback object, you may consider replacing
   the latter interfering with yours with copies of other more neutral fallback objects.
 - Remember that you can rotate your object in Gazebo in order to let it lie on the table in a stable configuration.
+  ⚠ Fiddle only with the [orientation part](./gazebo/worlds/web-contest-sandbox.sdf#L61).
 
 ### ☁ Instructions to run the sandbox on the web
 1. This is a Gitpod-enabled sandbox, so to get started click on `https://gitpod.io/#https://github.com/easy-peasy-robotics/your-sandbox`

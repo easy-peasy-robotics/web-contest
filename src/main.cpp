@@ -238,7 +238,7 @@ class Module: public yarp::os::RFModule {
             pose.block<3,1>(0,3) = Eigen::Vector3d(-.45, 0., -.1);
             pose.block<3,3>(0,0) = Eigen::AngleAxisd(M_PI, Eigen::Vector3d::UnitZ()).toRotationMatrix();
             viewer->showModel(object_model, scale, pose, opacity);
-            k = 1;
+            k = 0;
         }
         
         // return here the position of the object on the table

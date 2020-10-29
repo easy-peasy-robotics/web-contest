@@ -95,7 +95,7 @@ class WorldHandler : public gazebo::WorldPlugin
             const auto ang = rot(mersenne_engine) / 2.;
 
             const auto p = poses[j].Pos();
-            const auto q = poses[j].Rot() * ignition::math::Quaterniond(std::cos(ang), 0., 0., std::sin(ang));
+            const auto q = ignition::math::Quaterniond(std::cos(ang), 0., 0., std::sin(ang)) * poses[j].Rot();
             ignition::math::Pose3d pose_i(p.X() + .3, p.Y(), Z, q.W(), q.X(), q.Y(), q.Z());
 
             auto& m = models[i];

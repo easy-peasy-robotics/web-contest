@@ -44,9 +44,9 @@ In particular, the contest code already contains boilerplate snippets to operate
   to test your object as well as the codebase will be different from the sandbox.
 - If your object is similar to one particular fallback object, you may consider replacing
   the latter interfering with yours with copies of other more neutral fallback objects. However, object
-  names in the simulation shall be unchanged.
-- Remember that you can rotate your object in Gazebo in order to let it lie on the table in a stable configuration.
-  Fiddle only with the [orientation part](./gazebo/worlds/web-contest-sandbox.sdf#L61).
+  names in the simulation shall remain unchanged.
+- Remember that you can rotate your object in Gazebo in order to make it visually appear in a given suitable configuration.
+  Fiddle only with the [orientation part](./gazebo/models/object/model.sdf#L19).
 
 ### ☁ Instructions to run the sandbox on the web
 1. This is a Gitpod-enabled sandbox, so to get started click on `https://gitpod.io/#https://github.com/easy-peasy-robotics/your-sandbox`

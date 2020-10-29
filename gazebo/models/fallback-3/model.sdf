@@ -4,10 +4,9 @@
     <link name="base_link">
       <collision name="collision">
         <geometry>
-            <mesh>
-                <uri> model://fallback-3/mesh.stl </uri>
-                <scale>0.002 0.002 0.002</scale>
-            </mesh>
+            <box>
+                <size>0.08 0.08 0.16</size>
+            </box>
         </geometry>
       </collision>
       <visual name="visual">
@@ -17,6 +16,7 @@
                 <scale>0.002 0.002 0.002</scale>
             </mesh>
         </geometry>
+        <pose>0 0 0 0 0 0</pose>
       </visual>
     </link>
   </model>

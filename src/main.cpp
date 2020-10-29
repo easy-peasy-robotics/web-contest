@@ -42,6 +42,7 @@ class Module: public yarp::os::RFModule {
     yarp::dev::IGazeControl* igaze;
     double fov_h{0.};
     bool stopping{false};
+    int gaze_context;
 
     yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb>> imgPort;
     yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat>> depthPort;
@@ -100,6 +101,9 @@ class Module: public yarp::os::RFModule {
         rpcPort.open("/service");
         attach(rpcPort);
 
+        // store the context
+        igaze->storeContext(&gaze_context);
+
         // block the eyes vergence to a predefined value
         // that will work with the pyshical robot
         igaze->blockEyes(5.);
@@ -129,6 +133,7 @@ class Module: public yarp::os::RFModule {
 
     /*********************************************************************************/
     bool close() override {
+        igaze->restoreContext(gaze_context);
         driverGaze.close();
         imgPort.close();
         depthPort.close();

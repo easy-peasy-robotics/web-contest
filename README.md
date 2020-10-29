@@ -32,7 +32,7 @@ Bear in mind the following important aspects:
 - The entry point to your code needs to be the request **`go`** sent to the RPC port `/service`, to which
   you are required to return the position of your object in the allowed set {1, 2, 3, 4}.
 - The smoke-test will interrogate your module multiple times in a row by changing the scenario and you will have to
-  respond to each request within **120 seconds** to prevent timeout expiration.
+  respond to each request within **240 seconds** to prevent timeout expiration.
   
 Moreover, to address the motor control part, you can make use of standard joint interfaces (position, velocity...), although
 our recommendation is that you exploit an operational space approach for controlling the gaze as discussed [here](https://robotology.github.io/robotology-documentation/doc/html/icub_gaze_interface.html) 🌐
@@ -43,7 +43,8 @@ In particular, the contest code already contains boilerplate snippets to operate
 - Do not rely on the appearance of fallback objects, as the physical setting where you are going to put
   to test your object as well as the codebase will be different from the sandbox.
 - If your object is similar to one particular fallback object, you may consider replacing
-  the latter interfering with yours with copies of other more neutral fallback objects.
+  the latter interfering with yours with copies of other more neutral fallback objects. However, object
+  names in the simulation shall be unchanged.
 - Remember that you can rotate your object in Gazebo in order to let it lie on the table in a stable configuration.
   Fiddle only with the [orientation part](./gazebo/worlds/web-contest-sandbox.sdf#L61).
 

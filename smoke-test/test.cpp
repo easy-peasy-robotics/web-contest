@@ -33,7 +33,7 @@ public:
     /******************************************************************/
     bool setup(Property& property) override
     {
-        float rpcTmo=(float)property.check("rpc-timeout",Value(120.0)).asDouble();
+        float rpcTmo=(float)property.check("rpc-timeout",Value(240.0)).asDouble();
 
         worldPort.open("/"+getName()+"/world:rpc");
         worldPort.asPort().setTimeout(rpcTmo);

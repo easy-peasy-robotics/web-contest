@@ -21,13 +21,13 @@
   <connection>
       <from>/depthCamera/rgbImage:o</from>
       <to>/img:i</to>
-      <protocol>unix_stream</protocol>
+      <protocol>fast_tcp</protocol>
   </connection>
 
   <connection>
       <from>/depthCamera/depthImage:o</from>
       <to>/depth:i</to>
-      <protocol>unix_stream</protocol>
+      <protocol>fast_tcp</protocol>
   </connection>
 
 </application>

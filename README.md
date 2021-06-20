@@ -49,9 +49,9 @@ In particular, the contest code already contains boilerplate snippets to operate
   Fiddle only with the [orientation part](./gazebo/models/object/model.sdf#L19).
 
 ### ☁ Instructions to run the sandbox on the web
-1. This is a Gitpod-enabled sandbox, so to get started click on `https://gitpod.io/#https://github.com/easy-peasy-robotics/your-sandbox`
+1. This is a Gitpod-enabled sandbox, so to get started click on the badge below:
 
-    ![Gitpod](https://gitpod.io/button/open-in-gitpod.svg)
+    ![![Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer)
 
 2. Once the sandbox workspace is ready, build and install the project:
     ```sh

@@ -49,22 +49,22 @@ In particular, the contest code already contains boilerplate snippets to operate
   Fiddle only with the [orientation part](./gazebo/models/object/model.sdf#L19).
 
 ### ☁ Instructions to run the sandbox on the web
-1. This is a Gitpod-enabled sandbox, so to get started click on the badge below:
+1. This is a Gitpod-enabled sandbox, so to get started click on the badge below (or type the URL `https://gitpod.io/#https://github.com/easy-peasy-robotics/your-sandbox`):
 
-    ![![Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer)
+    [![Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer)
 
-2. Once the sandbox workspace is ready, build and install the project:
-    ```sh
-    $ cd /workspace/web-contest-sandbox 
-    $ mkdir build && cd build
-    $ cmake ../
-    $ make install
+1. Once the sandbox workspace is ready, build and install the project:
+    ```console
+    cd /workspace/web-contest-sandbox 
+    mkdir build && cd build
+    cmake ../
+    make install
     ```
-3. From within Gitpod, open up the browser at the port `6080` to get to the workspace desktop GUI.
-4. In the desktop GUI, open a terminal and run the grasping experiment:
-   ```sh
-   $ cd /workspace/web-contest-sandbox/smoke-test
-   $ ./test.sh
+1. From within Gitpod, open up the browser at the port `6080` to get to the workspace desktop GUI.
+1. In the desktop GUI, open a terminal and run the grasping experiment:
+   ```console
+   cd /workspace/web-contest-sandbox/smoke-test
+   ./test.sh
    ```
 
 ## 👥 Tips for team working

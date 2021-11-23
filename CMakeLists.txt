@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.12)
 project(web-contest-sandbox VERSION 1.0.0)
 
 find_package(YCM REQUIRED)
-find_package(YARP 3.3.0 REQUIRED COMPONENTS os dev sig math pcl)
+find_package(YARP 3.5.1 REQUIRED COMPONENTS os dev sig math pcl)
 find_package(ICUBcontrib REQUIRED)
 find_package (Eigen3 3.3 REQUIRED)
 find_package(PCL REQUIRED)

@@ -33,7 +33,7 @@ public:
     /******************************************************************/
     bool setup(Property& property) override
     {
-        float rpcTmo=(float)property.check("rpc-timeout",Value(240.0)).asDouble();
+        float rpcTmo=(float)property.check("rpc-timeout",Value(240.0)).asFloat64();
 
         worldPort.open("/"+getName()+"/world:rpc");
         worldPort.asPort().setTimeout(rpcTmo);
@@ -68,17 +68,17 @@ public:
             
             {
                 Bottle cmd, rep;
-                cmd.addVocab(Vocab::encode("shuffle"));
+                cmd.addVocab32("shuffle");
                 worldPort.write(cmd, rep);
-                response_correct = rep.get(1).asInt();
+                response_correct = rep.get(1).asInt32();
                 Time::delay(5.);
             }
 
             {
                 Bottle cmd, rep;
-                cmd.addVocab(Vocab::encode("go"));
+                cmd.addVocab32("go");
                 if (servicePort.write(cmd, rep)) {
-                    response_actual = rep.get(0).asInt();
+                    response_actual = rep.get(0).asInt32();
                 } else {
                     ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to talk to /service");
                 }

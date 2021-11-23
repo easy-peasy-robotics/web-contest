@@ -49,11 +49,11 @@ class WorldHandler : public gazebo::WorldPlugin
             if (returnToSender != nullptr) {
                 yarp::os::Bottle rep;
                 std::lock_guard<std::mutex> lck(hdl->mtx);
-                if (cmd.get(0).asVocab() == yarp::os::Vocab::encode("shuffle")) {
-                    rep.addVocab(yarp::os::Vocab::encode("ack"));
-                    rep.addInt(hdl->shuffle(true));
+                if (cmd.get(0).asVocab32() == yarp::os::Vocab32::encode("shuffle")) {
+                    rep.addVocab32("ack");
+                    rep.addInt32(hdl->shuffle(true));
                 } else {
-                    rep.addVocab(yarp::os::Vocab::encode("nack"));
+                    rep.addVocab32("nack");
                 }
                 rep.write(*returnToSender);
             }

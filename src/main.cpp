@@ -81,7 +81,7 @@ class Module: public yarp::os::RFModule {
             yarp::os::Bottle info;
             igaze->getInfo(info);
             auto intrinsics = info.find("camera_intrinsics_left").asList();
-            fov_h = intrinsics->get(0).asDouble();
+            fov_h = intrinsics->get(0).asFloat64();
         } else {
             if (!yarp::os::Network::connect(camPort.getName(), "/depthCamera/rpc:i")) {
                 yError() << "Unable to connect to depthCamera";
@@ -89,11 +89,11 @@ class Module: public yarp::os::RFModule {
                 return false;
             }
             yarp::os::Bottle cmd, rep;
-            cmd.addVocab(VOCAB_RGB_VISUAL_PARAMS);
-            cmd.addVocab(VOCAB_GET);
-            cmd.addVocab(VOCAB_FOV);
+            cmd.addVocab32(VOCAB_RGB_VISUAL_PARAMS);
+            cmd.addVocab32(VOCAB_GET);
+            cmd.addVocab32(VOCAB_FOV);
             camPort.write(cmd, rep);
-            fov_h = rep.get(3).asDouble();
+            fov_h = rep.get(3).asFloat64();
         }
 
         imgPort.open("/img:i");
@@ -151,8 +151,8 @@ class Module: public yarp::os::RFModule {
     /*********************************************************************************/
     bool respond(const yarp::os::Bottle& cmd,
                  yarp::os::Bottle& reply) override {
-        if (cmd.get(0).asVocab() == yarp::os::Vocab::encode("go")) {
-            reply.addInt(go());
+        if (cmd.get(0).asVocab32() == yarp::os::Vocab32::encode("go")) {
+            reply.addInt32(go());
         } else {
             // the parent class handles the "quit" command
             return yarp::os::RFModule::respond(cmd, reply);

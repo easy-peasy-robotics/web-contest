@@ -84,6 +84,6 @@ quite useful in certain circumstances.
 ## 🏆 Evaluation Criteria
 In descending priority order:
 - How the 🤖 behaves overall (e.g. efficiency, stability, robustness, predictability).
-- How the CAD design of the objest complies with the original requirements.
+- How the CAD design of the object complies with the original requirements.
 - How the repository is organized in terms of code and documentation.
 - Possibly, mentors will [review your team's code](https://help.github.com/articles/about-pull-request-reviews).

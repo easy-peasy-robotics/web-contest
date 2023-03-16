@@ -19,7 +19,6 @@
         <parameters>--context gazeboCartesianControl --from iKinGazeCtrl.ini --torso off</parameters>
         <dependencies>
             <port timeout="10">/icubSim/head/state:o</port>
-            <port timeout="10">/icubSim/inertial</port>
         </dependencies>
         <ensure>
             <wait>2</wait>
